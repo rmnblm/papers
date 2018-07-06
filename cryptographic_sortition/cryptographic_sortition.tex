@@ -1,0 +1,326 @@
+\documentclass[12pt,a4]{article}
+
+\usepackage{cite}
+\usepackage[table]{xcolor}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{url}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{resizegather}
+% \usepackage{refcheck}
+
+\begin{document}
+
+\title{Cryptographic Sortition \\for Proof of Stake in Bazo}
+\author{Roman Blum [rblum@hsr.ch]\\
+        University of Applied Sciences Rapperswil}
+\maketitle
+
+\begin{abstract}
+Cryptographic sortition is used to randomly select a user who is assigned the right to append the next block to a blockchain. 
+The goal of this paper is to analyze existing blockchain protocols based on Proof of Stake (PoS), such as Algorand and Ouroboros, in order to reevaluate and improve cryptographic sortition in Bazo.  
+
+Bazo is a peer-to-peer cryptocurrency which recently moved from Proof of Work (PoW) to chain-based PoS. However, the PoS protocol of Bazo has a vulnerability that is exploitable in the event of a fork where validators unintentionally reveal secret information.
+\end{abstract}
+
+\section{Introduction}
+
+In blockchain protocols based on Proof of Work (PoW) such as Bitcoin \cite{Nakamoto08}, miners race to solve a difficult mathematical puzzle. The winner proposes the next block and earns a reward. Since it takes significant computing power to solve this problem, it proves that the miner has done sufficient work to solve the puzzle. However, PoW systems are highly energy-inefficient, since the only purpose of PoW is to reach consensus by solving a problem that is deliberately made hard such that an adversarial attempt to overpower the network is rendered economically infeasible \cite{MajorityAttack}.
+
+The wastefulness, i.e., electricity and mining hardware, of PoW-based blockchains has motivated the industry and academia to explore alternative solutions. The challenge lies in the fact that an alternative solution requires the same secure and decentralized properties like a PoW-based system, but without depleting physical scarce resources \cite{Bentov14}.
+
+A solution to the problem was proposed in the early times of Bitcoin \cite{QuantumMechanic11}, referred to as Proof of Stake (PoS), where validators vote with their ownership of a certain cryptocurrency unit instead of computational power. The weight of each validator in the network depends on the size of of their stake. PoS seeks to address the computational overhead of PoW by attributing mining power in proportion to the amount of coins held by a miner; however, it faces a number of economical and technical challenges. 
+
+\section{Background and Related Work}
+\label{Background}
+
+The term \textit{cryptographic sortition} was introduced by Micali et al. \cite{Micali99} in 1999 and origins back to the ancient Athens, where sortition was a method of selecting a random sample from a pool of political officials. Equally, cryptographic sortition in PoS is used to select a random subset of users with respect to each users' stake. 
+
+The goal of this paper is to reevaluate the PoS design choices of the Bazo blockchain. Bazo \cite{Sgier17, Bachmann18} is an open source cryptocurrency developed from scratch by students at the University of Zurich and University of Applied Sciences Rapperswil. Initially developed as a PoW-based blockchain, energy consumption considerations and the risk of centralization were reasons to recently switch from PoW to PoS. 
+
+Bazo uses a chain-based PoS approach, that is, the algorithm randomly selects a validator and assigns him or her the right to append a new block to the blockchain. In order to become a validator, a user generates a local seed, denoted as $Seed_{Local}$, and publishes a Stake Transaction (StakeTx, further described in Section \ref{Implementation:StakeTx}) containing a hashed version of $Seed_{Local}$ to the network. A transaction of this type is accepted by the network if the issuer fulfills the minimum staking amount that is needed.
+
+After the minimum waiting time elapsed, each validator participates in the election process in a non-interactive way. Contrary to PoW, a validator is limited to exactly 1 H/s (hash per second) by providing a valid \textit{TimeInSeconds} to fulfill the PoS condition
+
+\begin{gather}
+\label{eq:PoSCondition}
+  {\frac{\text{SHA-256}([Seed_{PrevBlocks}] \cdot Seed_{Local} \cdot BlockHeight \cdot TimeInSeconds)}{Coins}} \leq Target.
+\end{gather}
+The following description of the properties in Equation \ref{eq:PoSCondition} is from the official Proof of Stake for Bazo paper \cite{Bachmann18} and has been slightly adapted: 
+
+\begin{description}
+  \item[List of the Previous Seeds($Seed_{PrevBlocks}$)] Each block contains the $Seed_{Local}$ of the validator who created the block. By including a list of the previous seeds a "stake grinding" attack becomes infeasible, because the local seeds are kept private by other validators of the network.
+  \item[Local Seed($Seed_{Local}$)] All parameters in the Equation \ref{eq:PoSCondition} are the same for each validator in the network except the local seed. The local seed individualises the PoS condition to each validator and therefore, a validator with a low amount of coins also has the possibility to append a block to the blockchain.
+  \item[Height of the Block($BlockHeight$)] The height of a block is the number of previously added blocks in the blockchain plus one.
+  \item[Amount of Coins($Coins$)] The amount of coins a leader owns. Note that the chances increase proportionally to the number of $Coins$.
+  \item[Difficulty of the PoS condition($Target$)] A validator has to fall below a \textit{Target} in order to append the next block to the blockchain. Note that this target determines the speed of the blockchain. As the number of validators in-/decreases the difficulty must be adjusted accordingly.
+\end{description}
+
+With attention to the PoS condition, if a validator falls below the $Target$ value, he or she has the right to append the next block to the blockchain. In that case, the validator must publish the $Seed_{Local}$ that it used to fulfill the PoS condition. Additionally, a hashed version of a new $Seed_{Local}$ is also set in the new block.
+
+However, the Bazo blockchain has a vulnerability in the event of a fork. Assume that an accidental fork happens, i.e., two validators fulfill the PoS condition at the same time. Consequently, the blockchain diverges into two potential chains forward, and as a result both chains could potentially grow side-by-side for an indefinite amount of time. The fork is resolved when one chain becomes longer than the other, i.e., the block height differs, and hence, the network abandons the shorter chain resulting in orphaned blocks. Unfortunately, validators who worked on the shorter chain have published their local seed and would have to publish a new StakeTx with an updated $Seed_{Local}$ to the network. Thus, validators would need to pay fees for the transaction and wait until the minimum waiting time elapsed before they can start staking again. As a result, the chance of a stake grinding attack increases, as described in Section \ref{Background:Challenges}.
+
+\subsection{Related Work} 
+
+There have been several proposals on how PoS could be implemented. The first cryptocurrency to implement PoS was Peercoin \cite{King12} in 2012, which uses a hybrid design to combine PoS and PoW methods. The PoW method is only used for the initial minting process, whereas the PoS method is used for the minting of new coins by using a concept called \textit{coin age}. Coin age is simply described as accumulated coin-days a miner has held coins in his or her wallet which in turn increases the chance of meeting a specific hash target in order to append the next block to the blockchain, similar to the PoS condition in Bazo shown in Equation \ref{eq:PoSCondition}.
+
+Bentov et al. \cite{Bentov14} formally studied and analyzed existing PoS protocols in 2014, and offered novel construction of a so called \textit{pure} PoS protocol that aims to overcome the problem of rational forks.
+
+Ouroboros \cite{Kiayias17} was the first scientifically peer-reviewed PoS protocol. In Ouroboros, the physical time is divided into epochs, and each epoch is divided into slots. Each slot has one and only leader who has a sole right to produce a block during his slot. Slot leaders are elected by all stakeholders for the next epoch during the current epoch. The public blockchain and cryptocurrency project Cardano \cite{Cardano} employs Ouroboros in a slightly modified version. In parallel to the development of Ouroboros, Algorand \cite{Gilad17} was developed. 
+
+Algorand is different in that stakeholders do not rely on some type of randomness, but rather self-election by running the election process on the local computer based on information in the previous block, while the selection runs random and completely automatic.
+
+Meanwhile, Casper \cite{ButerinPOS16} is the PoS protocol that is going to replace the current PoW implementation of Ethereum. Casper introduces a new concept called \textit{concensus by bet}. In Casper, anyone can participate by posting a bond, i.e., putting money on stake. After posting a bond, a validator has the opportunity to bet on a block that will be likely processed and appended to the blockchain. The idea is that validators are incentivized to play by the rules, i.e., being rewarded by betting on eventual consensus or losing money by betting against consensus. Hence, each validator's incentive is to bet in the way that they expect others to bet in the future, driving the process toward convergence \cite{Zamfir15}. The concept of Casper is analogous to PoW where each miner is betting with their hash power by spending money on electricity and mining equipment erosion. 
+
+\begin{table}[hbt]
+  \centering
+  \centering
+  \rowcolors{2}{white}{gray!12}
+  \begin{tabularx}{\textwidth}{llp{2.4cm}X}
+    \rowcolor{white}
+    & \textbf{Release} & \textbf{Live} & \textbf{PoS Mechanism} \\
+    Algorand & 2017 & No & Byzantine Fault Tolerance (BFT) \\
+    Bazo & 2018 & Yes & Chain-based PoS \\
+    Casper FFG & 2017 & Testnet only\newline (Ethereum) & Hybrid PoS/PoW as Smart Contract on top of Ethereum \\
+    Ouroboros & 2017 & Yes\newline (Cardano) & Slot Leader Election and Follow The Satoshi (FTS) algorithm \\
+    Peercoin & 2012 & Yes\newline (PPCoin) & PoW for coin distribution, PoS for consensus
+  \end{tabularx}
+  \caption{An overview of the analyzed PoS-based blockchain protocols}
+\end{table}
+
+
+\subsection{Challenges}
+\label{Background:Challenges}
+
+Fundamentally, the problem of PoS-based blockchains is the leader election process. True randomness is crucial to achieve a fair election among stakeholders, otherwise the algorithm may be prone to manipulation by an adversary \cite{Kiayias17}. For instance, the adversary could perform computations to try to bias the randomness in their own favor in order to increase the probability of their coins generating a valid block. This class of attack is referred to as "stake grinding", since the adversary could "grind" through many combinations and find favorable parameters to bias the leader election \cite{ButerinPOS16}. However, generating bias-resistant distributed randomness in a decentralized trust-less network is considered hard \cite{Syta16}, because introducing entropy into the system is often difficult and error-prone \cite{Schneier98, Gutterman06, Chirgwin14}.
+
+\section{Design}
+\label{Section:Design}
+
+The basic design concept of the PoS protocol employed in the current implementation of Bazo blockchain is kept similar, that is, a validator wishing to participate in the staking process has to publish a StakeTx well in advance in order to join the set of validators, has to fulfill a PoS condition to determine if he or she is eligible to append a block to the blockchain, and a block must contain some kind of information that proves the eligibility of the creator. However, a validator's exposed information should not be abused when a block is considered orphaned in the event of a fork. To put it differently, a validator's secret information is used to generate publicly verifiable information to prove that the validator is eligible to append block at height $h$. This publicly verifiable information must be only valid for height $h$, but invalid for height lower or higher than $h$. 
+
+We present two algorithms suitable for the Bazo blockchain in order to process the cryptographic sortition, namely using the concept of Verifiable Random Functions (VRFs) and using the public-key cryptosystem RSA. Both approaches are deterministic (as opposed to probabilistic), that is, for a given plaintext input and secret key it always produces the same cipher text output. It is important to realize that a deterministic encryption scheme is crucial for our design, because otherwise a stake grinding attack may again become feasible with computational effort, i.e., an adversary can produce multiple outputs for the same digital signature. 
+
+\subsection{Sortition using VRFs}
+
+VRFs \cite{Micali99, Goldberg17} are simply described as follows: Given a value $x$ and a key-pair with a public key $pk$ and a private key $sk$, a user can compute
+\begin{align}
+  \beta &= VRF_{hash}(sk, x)
+\end{align}
+and
+\begin{gather}
+  \pi = VRF_{proof}(sk, x).
+\end{gather}
+Both the hash $\beta$ and the proof $\pi$ are uniquely determined by $sk$ and $x$. Using $\pi$, everyone can reproduce $\beta$ without having the user to reveal $sk$ as
+\begin{gather}
+  \beta = VRF_{proof2hash}(\pi).
+\end{gather}
+Note that this means that
+\begin{gather}
+  VRF_{hash}(sk, x) = VRF_{proof2hash}(VRF_{proof}(sk, x)).
+\end{gather}
+Furthermore, using $\pi$ and $pk$, everyone can verify the correctness of $\beta$ with
+\begin{gather}
+  r = VRF_{verify}(pk, \pi, x),
+\end{gather}
+where $r$ is either $true$ or $false$. The $VRF_{hash}$ algorithm is deterministic, i.e., it always produces the same output $\beta$ for a given input $x$ and $sk$.
+
+In Algorand, cryptographic sortition is implemented using VRFs for choosing a random subset of users according to per-user weights \cite{Gilad17}. With this in mind, VRFs can be used for cryptographic sortition in Bazo. The procedure of PoS introduced in Section \ref{Background} works as follows.
+\par \
+
+\noindent
+A node publishes an empty stake transaction that states whether it wants to join (or leave) the set of validators by setting the $IsStaking$ property to $true$ or $false$. After a node has joined the set and the minimum waiting time has passed, it is eligible to append blocks to the blockchain by fulfilling the PoS condition
+
+\begin{gather}
+\label{eq:VRFPoSCondition}
+  {\frac{\text{SHA-256}([\beta_{PrevBlocks}] \cdot \beta_{Local} \cdot BlockHeight \cdot TimeInSeconds)}{Coins}} \leq Target,
+\end{gather}
+where
+\begin{gather}
+  \beta_{Local} = VRF_{hash}(sk, BlockHeight)
+\end{gather}
+is the local proof of the validator with a private key $sk$, where $BlockHeight$ is the number of previously added blocks in the blockchain plus one, and where $[\beta_{PrevBlocks}]$ is a list of the previous proofs. Note that $BlockHeight$ is used as a parameter to calculate $\beta_{Local}$ for two reasons. First, the block height is publicly known and can be used to verify as shown in Equation \ref{eq:vrfverify}, and second the digest of $VRF_{hash}$ is only valid for the height the block was published. A published block of a validator contains both $\beta_{Local}$ as well as $\pi_{Local}$. Other validators are now able to verify the eligibility by using $\pi_{Local}$, $\beta_{Local}$ and the public key $pk$ of the validator who fulfilled the Equation \ref{eq:VRFPoSCondition} and appended the next block with
+\begin{align}
+  \beta_{Local} = VRF_{proof2hash}(\pi_{Local})
+\end{align}
+and
+\begin{align}
+\label{eq:vrfverify}
+  r = VRF_{verify}(pk, \pi_{Local}, BlockHeight).
+\end{align}
+
+All signatures in Bazo are based on the elliptic curve digital signature algorithm (ECDSA), a digital signature algorithm based on elliptic curve cryptography (ECC). VRFs can be implemented using ECC or RSA. Thus, the implementation of VRFs has the advantage that the already existing public-private key-pair for signing transactions can be reused for this design approach. Furthermore, $\beta_{Local}$ and $\pi_{Local}$ have a small footprint in a published block, i.e., in the current implementation of Bazo which uses the ECDSA curve P-256, each value is only 32 bytes in size.
+
+\subsection{Sortition using RSA}
+
+RSA is an asymmetric encryption and decryption scheme that consists of a public-private key-pair $(pk, sk)$. Anyone can use $pk$ to encrypt a message $m$ to obtain the cipher text
+\begin{gather}
+  c = RSA_{encrypt}(pk, m),
+\end{gather}
+but only the owner of $sk$ can decrypt the message
+\begin{gather}
+  m = RSA_{decrypt}(sk, c).
+\end{gather}
+Additionally, RSA can also be used to apply a digital signature to a message. A user in possession of $sk$ can send $m$ along with a signature
+\begin{gather}
+  s = RSA_{sign}(sk, Hash(m)),
+\end{gather}
+and others can verify that $m$ indeed origins from the user by comparing $Hash(m)$ with the output of
+\begin{gather}
+  RSA_{verify}(pk, s, m).
+\end{gather}
+Note that the $RSA_{sign}$ function can't accommodate messages that are longer than $sk$. Hence, the hash function $Hash()$ is used to minimize the message length.
+
+% RSA is widely used for data encryption of e-mail and other digital transactions over the internet. For example, RSA is used in the web browser to validate the certificate of the remote server. Once the browser validated the certificate chain, it will use RSA to perform a secure key exchange with the server and thus the browser can communicate securely with the remote server using HTTPS.
+
+Similar to VRFs, RSA can be used as cryptographic sortition. Due to the simplicity of this approach and the built-in Golang RSA implementation (package "crypto/rsa") which leads to an easier implementation, RSA will be used as the cryptographic sortition mechanism in Bazo.
+
+\section{Implementation}
+
+We provide an updated description of the protocol design as proposed in the official Proof of Stake for Bazo paper \cite{Bachmann18}. Descriptions are taken, shortened and revised where necessary.
+
+\subsection{Stake Transaction (StakeTx)}
+\label{Implementation:StakeTx}
+
+A node wishing to participate in staking can publish a stake transaction. The transaction contains the property $Key\ Commitment$, which is the RSA public key $pk$ of the node who published the transaction. The StakeTx consists of the following properties:
+
+\begin{description}
+  \item[Fee] A fee that has to be paid for the validator.
+  \item[Is Staking] A boolean value that indicates whether the node wants to join or leave the set of validators.
+  \item[Account] The hash of the public key of the issuer.
+  \item[Key Commitment] When a node wants to join the set of validators it must create a pair of public and private key $(pk, sk)$ using RSA. Note that this key-pair is different to the key-pair of the user's wallet. By submitting the public key $pk$, the node commits to this key and it cannot change it in a later step. The $(pk, sk)$ key-pair will be used in the PoS condition which is described in detail in Section \ref{Implementation:PoSCondition}.
+  \item[Signature] The signature serves the purpose of authentication. The node digitally signs the transaction with its private key.
+\end{description}
+
+\subsection{Block}
+
+A block consists of the following properties:
+
+\begin{description}
+  \item[Number of StakeTx] The number of StakeTxs that are included in the block.
+  \item[StakeTx Data] The hashes of all StakeTxs included in this block in sequential order.
+  \item[Time in Seconds] The number of seconds that a validator needs in order to fulfill the PoS condition.
+  \item[Commitment Proof] This property stores a signed message of the $Height$ that this block was created. In particular, $RSA(sk, \text{SHA3-512}(Height))$ where $sk$ represents the private key that corresponds to the public key $pk$ that was set in the initial StakeTx of the node. Other validators can use $pk$ in order to verify the proof.
+  \item[Height] The height of a block refers to the number of previously appended blocks to the blockchain.
+  \item[Slashed Address] A validator can submit a slashing proof when appending a block, i.e., it holds the address of the misbehaving node that must be punished.
+  \item[Two Conflicting Block Hashes] These two properties exhibit the block hashes where the same node has appended a block on two competing chains within the slashing window size.
+\end{description}
+
+\subsection{PoS Condition}
+\label{Implementation:PoSCondition}
+
+The introduced PoS condition in Section \ref{Background} is updated to
+
+\begin{gather}
+\label{eq:RSAPoSCondition}
+  {\frac{\text{SHA-256}([Proof_{PrevBlocks}] \cdot Proof_{Local} \cdot BlockHeight \cdot TimeInSeconds)}{Coins}} \leq Target.
+\end{gather}
+
+\noindent
+The following parameters changed as opposed to Equation \ref{eq:PoSCondition}:
+
+\begin{description}
+  \item[List of the Previous Proofs ($Proof_{PrevBlocks}$)] By including a list of the previous proofs a stake grinding attack becomes infeasible.
+  \item[Local Proof ($Proof_{Local}$)] All parameters in Equation \ref{eq:RSAPoSCondition} are the same for each validator in the network except the local proof. The local proof individualises the PoS condition to each validator and therefore, a validator with a low amount of coins also has the possibility to append a block to the blockchain.
+\end{description}
+
+\subsection{Validation}
+
+Upon receiving a new block, each validator can check if the \textit{Commitment Proof} provided in the block corresponds to the public key $pk$ set in the StakeTx when the validator has joined the set of validators. In particular, each validator can verify the origin of the message by the public key of the block creator. Other conditions such as minimum waiting time or PoS condition can be studied in the official Proof of Stake for Bazo paper \cite{Bachmann18}.
+
+\section{Evaluation}
+
+Blockchain always raises a variety of pressing security considerations, and each change request could potentially break the entire system and puts the blockchain and its users at risk.
+
+The usual attack on RSA involves factoring a large number which is the product of two very large prime numbers. In general, finding prime numbers is fairly easy, and multiplying them together to get a single large number is also quite easy. However, starting with a large prime number, finding the factors is \textit{quite} hard. Implemented correctly, i.e., using a profound Go library that does the encryption part, RSA is considered safe. Other attack vectors and countermeasures have been extensively discussed in the official Proof of Stake for Bazo paper \cite{Bachmann18}.
+
+The Bazo blockchain strives for simple, yet secure implementations of fundamental concepts in computer science. This mindset led to decision of using RSA over VRFs. The updated protocol design approach uses RSA to proof the eligibility of a validator who wants to append a block to the blockchain. Thus, the key length is an important security parameter and should be chosen appropriately. According to the National Institute of Standards and Technology (NIST), a key length of 2048 bits is considered secure for the years to come until 2030 \cite{BlueKrypt}.
+
+However, using RSA over VRFs has two disadvantages. First, besides the public-private key-pair for signing transactions, a user has to maintain a second pair of keys. Second, assuming that an RSA key size of 4096 bits is chosen, the footprint of the \textit{Commitment Proof} property in a block is 8 times higher in comparison to the VRF values $\beta$ and $\pi$ each having a size of 256 bits.
+
+\begin{table}
+  \newcolumntype{Y}{>{\centering\arraybackslash}X}
+  \centering
+  \rowcolors{2}{white}{gray!12}
+  \begin{tabularx}{\textwidth}{p{2.8cm}XX}
+    \rowcolor{white}
+    & \textbf{VRFs} & \textbf{RSA} (4096 bits key size) \\
+    Additional key-pair required? & No, key-pair of wallet can be used & Yes, a second key-pair must be maintained \\
+    Additional Size in StakeTx & 0 Bytes & 512 Bytes \\
+    Size in Block & 2 $\times$ 32 Bytes & 512 Bytes \\
+    Built-in Golang & No, 3rd party package required & Yes, "crypto/rsa" package
+  \end{tabularx}
+  \caption{An overview of cryptographic sortition using VRFs vs. RSA}
+\end{table}
+
+\section{Conclusions}
+Upon validating and extensively discussing our design approach, we decided to choose sortition using RSA due to simplicity and built-in Golang RSA implementation. The transaction size of RSA proofs is an acceptable disadvantage. The implemented solution is unique and specially built for the PoS protocol of the Bazo blockchain.
+
+\section*{Acknowledgements}
+
+Many thanks to Markus Knecht for his helpful comments and suggestions regarding all cryptographic matter of this paper. 
+
+\begin{thebibliography}{5}
+
+	\bibitem{Syta16}
+	E. Syta and P. Jovanovic and E. Kokoris Kogias and N. Gailly and L. Gasser and I. Khoffi and M. J. Fischer and B. Ford. Scalable Bias-Resistant Distributed Randomness. \url{https://eprint.iacr.org/2016/1067}, 2016.
+	
+	\bibitem{Chirgwin14}
+	R. Chirgwin. iOS 7’s weak random number generator stuns kernel security. The Register, \url{https://www.theregister.co.uk/2014/03/16/ios_7_has_weak_random_number_generator/}, 2014.
+	
+	\bibitem{Gutterman06}
+	Z. Gutterman, B. Pinkas, and T. Reinman. Analysis of the Linux random number generator. In \textit{IEEE Symposium on Security and Privacy}, pages 371–385, 2006.
+	
+	\bibitem{Schneier98}
+	J. Kelsey, B. Schneier, D. Wagner, and C. Hall. Cryptanalytic Attacks on Pseudorandom Number Generators. \textit{Fast Software Encryption, Fifth International Workshop Proceedings (March 1998)}, Springer-Verlag, pp. 168-188, 1998.
+	
+	\bibitem{ButerinPOS16}
+	V. Buterin et al. Proof of Stake FAQ. \url{https://github.com/ethereum/wiki/wiki/Proof-of-Stake-FAQ}, 2016.
+	
+	\bibitem{Zamfir15}
+	V. Zamfir. Introducing Casper "the Friendly Ghost". \url{https://blog.ethereum.org/2015/08/01/introducing-casper-friendly-ghost/}, 2015.
+		
+	\bibitem{Gilad17}
+	Y. Gilad, R. Hemo, S. Micali, G. Vlachos, and N. Zeldovich. Algorand: Scaling Byzantine Agreements for Cryptocurrencies. {\em p51--68}. In {\em Proceedings of the 26th Symposium on Operating Systems Principles}, Shanghai, China, 2017. \url{http://doi.acm.org/10.1145/3132747.3132757}.
+	
+	\bibitem{Kiayias17}
+	A. Kiayias, A. Russell, B. David, and R. Oliynykov. Ouroboros: A Provably Secure Proof-of-Stake Blockchain Protocol. \url{https://eprint.iacr.org/2016/889.pdf}, 2017.
+	
+	\bibitem{Bentov14}
+	I. Bentov, A. Gabizon, and A. Mizrahi. Cryptocurrencies without Proof of Work. \url{https://dblp.org/rec/bib/journals/corr/BentovGM14}, 2014.
+	
+	\bibitem{Micali99}
+	S. Micali, M. O. Rabin, and S. P. Vadhan. Verifiable random functions. In {\em Proceedings of the 40th Annual IEEE Symposium on Foundations of Computer Science (FOCS)}, New York, NY, Oct. 1999.
+
+	\bibitem{Goldberg17}
+	S. Goldberg, D. Papadopoulos, and J.Vcelak. Verifiable Random Functions (VRFs). Internet-Draft of the Internet Engineering Task Force (IETF) \url{https://tools.ietf.org/id/draft-goldbe-vrf-01.html}, 2017.
+
+	\bibitem{Nakamoto08}
+	S. Nakamoto. Bitcoin: A peer-to-peer electronic cash system.
+	\url{https://bitcoin.org/bitcoin.pdf}, 2008
+	
+	\bibitem{MajorityAttack}
+	Bitcoin Wiki. Majority Attack.
+	\url{https://en.bitcoin.it/wiki/Majority_attack}, visited 30.03.2018.
+	
+	\bibitem{Cardano}
+	Cardano. A decentralised public blockchain and cryptocurrency project.
+	\url{https://www.cardano.org/en/home/}, visited 21.04.2018.
+	
+	\bibitem{Sgier17}
+	L. Sgier. Bazo - A Cryptocurrency from Scratch. \url{https://files.ifi.uzh.ch/CSG/staff/bocek/extern/theses/BA-Livio-Sgier.pdf}, 2017.
+	
+	\bibitem{Bachmann18}
+	S. Bachmann. Proof of Stake for Bazo. \url{https://files.ifi.uzh.ch/CSG/staff/bocek/extern/theses/BA-Simon-Bachmann.pdf}, 2018
+
+	\bibitem{QuantumMechanic11}
+	Bitcoin forum user "QuantumMechanic". Proof of stake instead of proof of work. \url{https://bitcointalk.org/index.php?topic=27787.0}, visited 21.03.2018.
+	
+	\bibitem{King12}
+	S.King and S. Nadal. PPCoin: Peer-to-Peer Crypto-Currency with Proof-of-Stake. \url{https://peercoin.net/assets/paper/peercoin-paper.pdf}, 2012.
+	
+	\bibitem{BlueKrypt}
+	D. Giry. Cryptographic Key Length Recommendation, \url{https://www.keylength.com/en/4/}, visited 30.04.2018.
+\end{thebibliography}
+
+\end{document}
