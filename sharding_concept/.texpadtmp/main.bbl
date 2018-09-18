@@ -1,0 +1,882 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 2.8 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\sortlist[entry]{nty/global/}
+  \entry{Plasma10Min}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=AA}{%
+         family={Akentiev},
+         familyi={A\bibinitperiod},
+         given={Anthony},
+         giveni={A\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AA1}
+    \strng{fullhash}{AA1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{title}{Plasma in 10 minutes}
+    \verb{url}
+    \verb https://medium.com/chain-cloud-company-blog/plasma-in-10-minutes-c856
+    \verb da94e339
+    \endverb
+    \field{urlday}{26}
+    \field{urlmonth}{07}
+    \field{urlyear}{2018}
+  \endentry
+
+  \entry{BIP101}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=AG}{%
+         family={Andresen},
+         familyi={A\bibinitperiod},
+         given={Gavin},
+         giveni={G\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{AG1}
+    \strng{fullhash}{AG1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{A}
+    \field{sortinithash}{A}
+    \field{title}{Making Decentralized Economic Policy}
+    \verb{url}
+    \verb https://github.com/bitcoin/bips/blob/master/bip-0101.mediawiki
+    \endverb
+    \field{urlday}{12}
+    \field{urlmonth}{03}
+    \field{urlyear}{2018}
+  \endentry
+
+  \entry{Bachmann18}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=BS}{%
+         family={Bachmann},
+         familyi={B\bibinitperiod},
+         given={Simon},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \name{editor}{1}{}{%
+      {{hash=BT}{%
+         family={Bocek},
+         familyi={B\bibinitperiod},
+         given={Thomas},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BS1}
+    \strng{fullhash}{BS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{title}{Proof of Stake for Bazo}
+    \list{institution}{1}{%
+      {University of Zurich}%
+    }
+    \field{year}{2018}
+  \endentry
+
+  \entry{BlockSizeLimitControversy}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=B}{%
+         family={Bitcoin},
+         familyi={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{B1}
+    \strng{fullhash}{B1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{title}{Block size limit controversy}
+    \verb{url}
+    \verb https://en.bitcoin.it/wiki/Block_size_limit_controversy
+    \endverb
+    \field{urlday}{07}
+    \field{urlmonth}{03}
+    \field{urlyear}{2018}
+  \endentry
+
+  \entry{Blum18}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=BR}{%
+         family={Blum},
+         familyi={B\bibinitperiod},
+         given={Roman},
+         giveni={R\bibinitperiod},
+      }}%
+    }
+    \name{editor}{1}{}{%
+      {{hash=BT}{%
+         family={Bocek},
+         familyi={B\bibinitperiod},
+         given={Thomas},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{BR1}
+    \strng{fullhash}{BR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{title}{Cryptographic Sortition for Proof of Stake in Bazo}
+    \list{institution}{1}{%
+      {University of Applied Sciences Rapperswil}%
+    }
+    \field{year}{2018}
+  \endentry
+
+  \entry{RaidenNetwork}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=b}{%
+         family={brainbot},
+         familyi={b\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{b1}
+    \strng{fullhash}{b1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{B}
+    \field{sortinithash}{B}
+    \field{title}{Raiden Network - Fast, cheap, scalable token transfers for
+  Ethereum}
+    \verb{url}
+    \verb https://raiden.network
+    \endverb
+    \field{urlday}{24}
+    \field{urlmonth}{04}
+    \field{urlyear}{2018}
+  \endentry
+
+  \entry{BitcoinMarketCap}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=CCM}{%
+         family={Capitalizations},
+         familyi={C\bibinitperiod},
+         given={Cryptocurrency\bibnamedelima Market},
+         giveni={C\bibinitperiod\bibinitdelim M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{CCM1}
+    \strng{fullhash}{CCM1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{C}
+    \field{sortinithash}{C}
+    \field{title}{Bitcoin Market Capitalization}
+    \verb{url}
+    \verb https://coinmarketcap.com/currencies/bitcoin/historical-data/?start=2
+    \verb 0180816&end=20180816
+    \endverb
+    \field{urlday}{17}
+    \field{urlmonth}{08}
+    \field{urlyear}{2018}
+  \endentry
+
+  \entry{ElasticsearchSharding}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=E}{%
+         family={Elasticsearch},
+         familyi={E\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{E1}
+    \strng{fullhash}{E1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{E}
+    \field{sortinithash}{E}
+    \field{title}{Sharding}
+    \verb{url}
+    \verb https://www.elastic.co/guide/en/elasticsearch/reference/current/_basi
+    \verb c_concepts.html#getting-started-shards-and-replicas
+    \endverb
+    \field{urlday}{12}
+    \field{urlmonth}{03}
+    \field{urlyear}{2018}
+  \endentry
+
+  \entry{BitcoinNG16}{inproceedings}{}
+    \name{author}{4}{}{%
+      {{hash=EI}{%
+         family={Eyal},
+         familyi={E\bibinitperiod},
+         given={Ittay},
+         giveni={I\bibinitperiod},
+      }}%
+      {{hash=GAE}{%
+         family={Gencer},
+         familyi={G\bibinitperiod},
+         given={Adem\bibnamedelima Efe},
+         giveni={A\bibinitperiod\bibinitdelim E\bibinitperiod},
+      }}%
+      {{hash=SEG}{%
+         family={Sirer},
+         familyi={S\bibinitperiod},
+         given={Emin\bibnamedelima Gun},
+         giveni={E\bibinitperiod\bibinitdelim G\bibinitperiod},
+      }}%
+      {{hash=RRV}{%
+         family={Renesse},
+         familyi={R\bibinitperiod},
+         given={Robbert\bibnamedelima Van},
+         giveni={R\bibinitperiod\bibinitdelim V\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {{USENIX} Association}%
+    }
+    \strng{namehash}{EIGAESEG+1}
+    \strng{fullhash}{EIGAESEGRRV1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{E}
+    \field{sortinithash}{E}
+    \field{booktitle}{13th {USENIX} Symposium on Networked Systems Design and
+  Implementation ({NSDI} 16)}
+    \field{isbn}{978-1-931971-29-4}
+    \field{pages}{45\bibrangedash 59}
+    \field{title}{Bitcoin-NG: A Scalable Blockchain Protocol}
+    \verb{url}
+    \verb https://www.usenix.org/conference/nsdi16/technical-sessions/presentat
+    \verb ion/eyal
+    \endverb
+    \list{location}{1}{%
+      {Santa Clara, CA}%
+    }
+    \field{year}{2016}
+  \endentry
+
+  \entry{BlockchainTrilemma}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=FE}{%
+         family={Foundation},
+         familyi={F\bibinitperiod},
+         given={Ethereum},
+         giveni={E\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{FE1}
+    \strng{fullhash}{FE1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{F}
+    \field{sortinithash}{F}
+    \field{title}{Blockchain Trilemma}
+    \verb{url}
+    \verb https://github.com/ethereum/wiki/wiki/Sharding-FAQ#this-sounds-like-t
+    \verb heres-some-kind-of-scalability-trilemma-at-play-what-is-this-trilemma
+    \verb -and-can-we-break-through-it
+    \endverb
+    \field{urlday}{07}
+    \field{urlmonth}{03}
+    \field{urlyear}{2018}
+  \endentry
+
+  \entry{BIP100}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=GJ}{%
+         family={Garzik},
+         familyi={G\bibinitperiod},
+         given={Jeff},
+         giveni={J\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{GJ1}
+    \strng{fullhash}{GJ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{G}
+    \field{sortinithash}{G}
+    \field{title}{Making Decentralized Economic Policy}
+    \verb{url}
+    \verb http://gtf.org/garzik/bitcoin/BIP100-blocksizechangeproposal.pdf
+    \endverb
+    \field{urlday}{12}
+    \field{urlmonth}{03}
+    \field{urlyear}{2018}
+  \endentry
+
+  \entry{Garret68}{article}{}
+    \name{author}{1}{}{%
+      {{hash=HG}{%
+         family={Hardin},
+         familyi={H\bibinitperiod},
+         given={Garrett},
+         giveni={G\bibinitperiod},
+      }}%
+    }
+    \keyw{commons, quals-commons}
+    \strng{namehash}{HG1}
+    \strng{fullhash}{HG1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{H}
+    \field{sortinithash}{H}
+    \field{number}{3859}
+    \field{pages}{1243\bibrangedash 1248}
+    \field{title}{{The Tragedy of the Commons}}
+    \verb{url}
+    \verb http://www.sciencemag.org/cgi/content/full/162/3859/1243
+    \endverb
+    \field{volume}{162}
+    \field{journaltitle}{Science}
+    \field{month}{12}
+    \field{year}{1968}
+  \endentry
+
+  \entry{VisaFactSheet}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=IV}{%
+         family={Inc.},
+         familyi={I\bibinitperiod},
+         given={Visa},
+         giveni={V\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{IV1}
+    \strng{fullhash}{IV1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{I}
+    \field{sortinithash}{I}
+    \field{title}{Visa Inc. Facts \& Figures, Nov 2015}
+    \verb{url}
+    \verb https://usa.visa.com/dam/VCOM/download/corporate/media/VisaInc_factsh
+    \verb eet_11012015%20(002).pdf
+    \endverb
+    \field{urlday}{07}
+    \field{urlmonth}{03}
+    \field{urlyear}{2018}
+  \endentry
+
+  \entry{Spanner2013}{article}{}
+    \name{author}{2}{}{%
+      {{hash=JCCMEAFCFJJFSGAGCHPHWHSKEKHLALSMDMDNSQRRLRYSMSCTRWJD}{%
+         family={James C.\bibnamedelima Corbett},
+         familyi={J\bibinitperiod\bibinitdelim C\bibinitperiod\bibinitdelim
+  C\bibinitperiod},
+         suffix={Jeffrey\bibnamedelima Dean},
+         suffixi={J\bibinitperiod\bibinitdelim D\bibinitperiod},
+         given={Michael Epstein Andrew Fikes Christopher Frost J. J. Furman
+  Sanjay Ghemawat Andrey Gubarev Christopher Heiser Peter Hochschild Wilson
+  Hsieh Sebastian Kanthak Eugene Kogan Hongyi Li Alexander Lloyd Sergey Melnik
+  David Mwaura David Nagle Sean Quinlan Rajesh Rao Lindsay Rolig Yasushi Saito
+  Michal Szymaniak Christopher Taylor Ruth\bibnamedelima Wang},
+         giveni={M\bibinitperiod\bibinitdelim E\bibinitperiod A\bibinitperiod
+  F\bibinitperiod C\bibinitperiod F\bibinitperiod J\bibinitperiod
+  J\bibinitperiod F\bibinitperiod S\bibinitperiod G\bibinitperiod
+  A\bibinitperiod G\bibinitperiod C\bibinitperiod H\bibinitperiod
+  P\bibinitperiod H\bibinitperiod W\bibinitperiod H\bibinitperiod
+  S\bibinitperiod K\bibinitperiod E\bibinitperiod K\bibinitperiod
+  H\bibinitperiod L\bibinitperiod A\bibinitperiod L\bibinitperiod
+  S\bibinitperiod M\bibinitperiod D\bibinitperiod M\bibinitperiod
+  D\bibinitperiod N\bibinitperiod S\bibinitperiod Q\bibinitperiod
+  R\bibinitperiod R\bibinitperiod L\bibinitperiod R\bibinitperiod
+  Y\bibinitperiod S\bibinitperiod M\bibinitperiod S\bibinitperiod
+  C\bibinitperiod T\bibinitperiod R\bibinitperiod\bibinitdelim
+  W\bibinitperiod},
+      }}%
+      {{hash=WD}{%
+         family={Woodford},
+         familyi={W\bibinitperiod},
+         given={Dale},
+         giveni={D\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{JCCJDMEAFCFJJFSGAGCHPHWHSKEKHLALSMDMDNSQRRLRYSMSCTRWWD1}
+    \strng{fullhash}{JCCJDMEAFCFJJFSGAGCHPHWHSKEKHLALSMDMDNSQRRLRYSMSCTRWWD1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{J}
+    \field{sortinithash}{J}
+    \field{title}{Spanner: Google’s Globally-Distributed Database}
+    \field{month}{08}
+    \field{year}{2013}
+  \endentry
+
+  \entry{Ouroboros2016}{misc}{}
+    \name{author}{4}{}{%
+      {{hash=KA}{%
+         family={Kiayias},
+         familyi={K\bibinitperiod},
+         given={Aggelos},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=RA}{%
+         family={Russell},
+         familyi={R\bibinitperiod},
+         given={Alexander},
+         giveni={A\bibinitperiod},
+      }}%
+      {{hash=DB}{%
+         family={David},
+         familyi={D\bibinitperiod},
+         given={Bernardo},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=OR}{%
+         family={Oliynykov},
+         familyi={O\bibinitperiod},
+         given={Roman},
+         giveni={R\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{KARADB+1}
+    \strng{fullhash}{KARADBOR1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \field{howpublished}{Cryptology ePrint Archive, Report 2016/889}
+    \field{note}{\url{https://eprint.iacr.org/2016/889}}
+    \field{title}{Ouroboros: A Provably Secure Proof-of-Stake Blockchain
+  Protocol}
+    \field{year}{2016}
+  \endentry
+
+  \entry{OmniLedger18}{inproceedings}{}
+    \name{author}{6}{}{%
+      {{hash=KKE}{%
+         family={Kokoris-Kogias},
+         familyi={K\bibinitperiod-K\bibinitperiod},
+         given={E.},
+         giveni={E\bibinitperiod},
+      }}%
+      {{hash=JP}{%
+         family={Jovanovic},
+         familyi={J\bibinitperiod},
+         given={P.},
+         giveni={P\bibinitperiod},
+      }}%
+      {{hash=GL}{%
+         family={Gasser},
+         familyi={G\bibinitperiod},
+         given={L.},
+         giveni={L\bibinitperiod},
+      }}%
+      {{hash=GN}{%
+         family={Gailly},
+         familyi={G\bibinitperiod},
+         given={N.},
+         giveni={N\bibinitperiod},
+      }}%
+      {{hash=SE}{%
+         family={Syta},
+         familyi={S\bibinitperiod},
+         given={E.},
+         giveni={E\bibinitperiod},
+      }}%
+      {{hash=FB}{%
+         family={Ford},
+         familyi={F\bibinitperiod},
+         given={B.},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+  \keyw{blockchain;sharding;distributed-ledger;cross-shard;decentralization;Byzantine-Fault-Tolerant;trust-but-verify;scalable;ByzCoinX;Atomix;ledger-pruning;state-blocks;randomness}
+    \strng{namehash}{KKEJPGL+1}
+    \strng{fullhash}{KKEJPGLGNSEFB1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{K}
+    \field{sortinithash}{K}
+    \field{booktitle}{2018 IEEE Symposium on Security and Privacy (SP)}
+    \verb{doi}
+    \verb 10.1109/SP.2018.000-5
+    \endverb
+    \field{issn}{2375-1207}
+    \field{pages}{19\bibrangedash 34}
+    \field{title}{OmniLedger: A Secure, Scale-Out, Decentralized Ledger via
+  Sharding}
+    \verb{url}
+    \verb doi.ieeecomputersociety.org/10.1109/SP.2018.000-5
+    \endverb
+    \field{volume}{00}
+  \endentry
+
+  \entry{BitcoinForkBCH}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=LS}{%
+         family={Larson},
+         familyi={L\bibinitperiod},
+         given={Selena},
+         giveni={S\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{LS1}
+    \strng{fullhash}{LS1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{title}{Bitcoin split in two, here's what that means}
+    \verb{url}
+    \verb http://money.cnn.com/2017/08/01/technology/business/bitcoin-cash-new-
+    \verb currency/index.html
+    \endverb
+    \field{urlday}{07}
+    \field{urlmonth}{03}
+    \field{urlyear}{2018}
+  \endentry
+
+  \entry{Luu2016}{article}{}
+    \name{author}{6}{}{%
+      {{hash=LL}{%
+         family={Luu},
+         familyi={L\bibinitperiod},
+         given={Loi},
+         giveni={L\bibinitperiod},
+      }}%
+      {{hash=NV}{%
+         family={Narayanan},
+         familyi={N\bibinitperiod},
+         given={Viswesh},
+         giveni={V\bibinitperiod},
+      }}%
+      {{hash=ZC}{%
+         family={Zheng},
+         familyi={Z\bibinitperiod},
+         given={Chaodong},
+         giveni={C\bibinitperiod},
+      }}%
+      {{hash=BK}{%
+         family={Baweja},
+         familyi={B\bibinitperiod},
+         given={Kunal},
+         giveni={K\bibinitperiod},
+      }}%
+      {{hash=GS}{%
+         family={Gilbert},
+         familyi={G\bibinitperiod},
+         given={Seth},
+         giveni={S\bibinitperiod},
+      }}%
+      {{hash=SP}{%
+         family={Saxena},
+         familyi={S\bibinitperiod},
+         given={Prateek},
+         giveni={P\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {ACM}%
+    }
+    \keyw{bitcoin, consensus protocol, sharding}
+    \strng{namehash}{LLNVZC+1}
+    \strng{fullhash}{LLNVZCBKGSSP1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{L}
+    \field{sortinithash}{L}
+    \field{booktitle}{Proceedings of the 2016 ACM SIGSAC Conference on Computer
+  and Communications Security}
+    \verb{doi}
+    \verb 10.1145/2976749.2978389
+    \endverb
+    \field{isbn}{978-1-4503-4139-4}
+    \field{pages}{17\bibrangedash 30}
+    \field{series}{CCS '16}
+    \field{title}{A Secure Sharding Protocol For Open Blockchains}
+    \verb{url}
+    \verb http://doi.acm.org/10.1145/2976749.2978389
+    \endverb
+    \list{location}{1}{%
+      {Vienna, Austria}%
+    }
+    \field{year}{2016}
+    \warn{\item Can't use 'location' + 'address'}
+  \endentry
+
+  \entry{ShardingPatternMS}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=M}{%
+         family={Microsoft},
+         familyi={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{M1}
+    \strng{fullhash}{M1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{title}{Sharding pattern}
+    \verb{url}
+    \verb https://docs.microsoft.com/en-us/azure/architecture/patterns/sharding
+    \endverb
+    \field{urlday}{12}
+    \field{urlmonth}{03}
+    \field{urlyear}{2018}
+  \endentry
+
+  \entry{MongoDBSharding}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=M}{%
+         family={MongoDB},
+         familyi={M\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{M2}
+    \strng{fullhash}{M2}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{title}{Sharding}
+    \verb{url}
+    \verb https://docs.mongodb.com/manual/sharding/
+    \endverb
+    \field{urlday}{12}
+    \field{urlmonth}{03}
+    \field{urlyear}{2018}
+  \endentry
+
+  \entry{Moore:2000:CMC:333067.333074}{incollection}{}
+    \name{author}{1}{}{%
+      {{hash=MGE}{%
+         family={Moore},
+         familyi={M\bibinitperiod},
+         given={Gordon\bibnamedelima E.},
+         giveni={G\bibinitperiod\bibinitdelim E\bibinitperiod},
+      }}%
+    }
+    \name{editor}{3}{}{%
+      {{hash=HMD}{%
+         family={Hill},
+         familyi={H\bibinitperiod},
+         given={Mark\bibnamedelima D.},
+         giveni={M\bibinitperiod\bibinitdelim D\bibinitperiod},
+      }}%
+      {{hash=JNP}{%
+         family={Jouppi},
+         familyi={J\bibinitperiod},
+         given={Norman\bibnamedelima P.},
+         giveni={N\bibinitperiod\bibinitdelim P\bibinitperiod},
+      }}%
+      {{hash=SGS}{%
+         family={Sohi},
+         familyi={S\bibinitperiod},
+         given={Gurindar\bibnamedelima S.},
+         giveni={G\bibinitperiod\bibinitdelim S\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {Morgan Kaufmann Publishers Inc.}%
+    }
+    \strng{namehash}{MGE1}
+    \strng{fullhash}{MGE1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{M}
+    \field{sortinithash}{M}
+    \field{chapter}{Cramming More Components Onto Integrated Circuits}
+    \field{isbn}{1-55860-539-8}
+    \field{pages}{56\bibrangedash 59}
+    \field{title}{Readings in Computer Architecture}
+    \verb{url}
+    \verb http://dl.acm.org/citation.cfm?id=333067.333074
+    \endverb
+    \list{location}{1}{%
+      {San Francisco, CA, USA}%
+    }
+    \field{year}{2000}
+  \endentry
+
+  \entry{Plasma}{misc}{}
+    \name{author}{2}{}{%
+      {{hash=PJ}{%
+         family={Poon},
+         familyi={P\bibinitperiod},
+         given={Joseph},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=BV}{%
+         family={Buterin},
+         familyi={B\bibinitperiod},
+         given={Vitalik},
+         giveni={V\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{PJBV1}
+    \strng{fullhash}{PJBV1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{P}
+    \field{sortinithash}{P}
+    \field{title}{Plasma: Scalable Autonomous Smart Contracts}
+    \verb{url}
+    \verb https://lightning.network/lightning-network-paper.pdf
+    \endverb
+    \field{urlday}{24}
+    \field{urlmonth}{04}
+    \field{urlyear}{2018}
+  \endentry
+
+  \entry{LightningNetwork}{misc}{}
+    \name{author}{2}{}{%
+      {{hash=PJ}{%
+         family={Poon},
+         familyi={P\bibinitperiod},
+         given={Joseph},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=DT}{%
+         family={Dryja},
+         familyi={D\bibinitperiod},
+         given={Thaddeus},
+         giveni={T\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{PJDT1}
+    \strng{fullhash}{PJDT1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{P}
+    \field{sortinithash}{P}
+    \field{title}{The Bitcoin Lightning Network: Scalable Off-Chain Instant
+  Payments}
+    \verb{url}
+    \verb http://plasma.io/plasma.pdf
+    \endverb
+    \field{urlday}{24}
+    \field{urlmonth}{04}
+    \field{urlyear}{2018}
+  \endentry
+
+  \entry{Sgier17}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=SL}{%
+         family={Sgier},
+         familyi={S\bibinitperiod},
+         given={Livio},
+         giveni={L\bibinitperiod},
+      }}%
+    }
+    \name{editor}{3}{}{%
+      {{hash=BT}{%
+         family={Bocek},
+         familyi={B\bibinitperiod},
+         given={Thomas},
+         giveni={T\bibinitperiod},
+      }}%
+      {{hash=HB}{%
+         family={Hamza},
+         familyi={H\bibinitperiod},
+         given={Bedrija},
+         giveni={B\bibinitperiod},
+      }}%
+      {{hash=RB}{%
+         family={Rodrigues},
+         familyi={R\bibinitperiod},
+         given={Bruno},
+         giveni={B\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{SL1}
+    \strng{fullhash}{SL1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{title}{Bazo - A Cryptocurrency from Scratch}
+    \list{institution}{1}{%
+      {University of Zurich}%
+    }
+    \field{year}{2017}
+  \endentry
+
+  \entry{Spasovski:2017:PSB:3167020.3167058}{inproceedings}{}
+    \name{author}{2}{}{%
+      {{hash=SJ}{%
+         family={Spasovski},
+         familyi={S\bibinitperiod},
+         given={Jason},
+         giveni={J\bibinitperiod},
+      }}%
+      {{hash=EP}{%
+         family={Eklund},
+         familyi={E\bibinitperiod},
+         given={Peter},
+         giveni={P\bibinitperiod},
+      }}%
+    }
+    \list{publisher}{1}{%
+      {ACM}%
+    }
+    \keyw{Groupware communication, blockchain, distributed \& cloud computing,
+  distributed ledger ecosystems, scale-free networks}
+    \strng{namehash}{SJEP1}
+    \strng{fullhash}{SJEP1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{S}
+    \field{sortinithash}{S}
+    \field{booktitle}{Proceedings of the 9th International Conference on
+  Management of Digital EcoSystems}
+    \verb{doi}
+    \verb 10.1145/3167020.3167058
+    \endverb
+    \field{isbn}{978-1-4503-4895-9}
+    \field{pages}{251\bibrangedash 258}
+    \field{series}{MEDES '17}
+    \field{title}{Proof of Stake Blockchain: Performance and Scalability for
+  Groupware Communications}
+    \verb{url}
+    \verb http://doi.acm.org/10.1145/3167020.3167058
+    \endverb
+    \list{location}{1}{%
+      {Bangkok, Thailand}%
+    }
+    \field{year}{2017}
+    \warn{\item Can't use 'location' + 'address'}
+  \endentry
+
+  \entry{Zilliqa18}{misc}{}
+    \name{author}{1}{}{%
+      {{hash=TZZ}{%
+         family={Team},
+         familyi={T\bibinitperiod},
+         given={Zhe\bibnamedelima Zilliqa},
+         giveni={Z\bibinitperiod\bibinitdelim Z\bibinitperiod},
+      }}%
+    }
+    \strng{namehash}{TZZ1}
+    \strng{fullhash}{TZZ1}
+    \field{labelnamesource}{author}
+    \field{labeltitlesource}{title}
+    \field{sortinit}{T}
+    \field{sortinithash}{T}
+    \field{title}{The Zilliqa Technical Whitepaper}
+    \verb{url}
+    \verb https://docs.zilliqa.com/whitepaper.pdf
+    \endverb
+    \field{urlday}{10}
+    \field{urlmonth}{07}
+    \field{urlyear}{2018}
+  \endentry
+\endsortlist
+\endinput

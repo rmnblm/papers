@@ -1,0 +1,145 @@
+% Chapter 2: Background and Related Work
+
+\chapter{Background and Related Work}
+
+\label{Chapter:Background}
+
+This chapter presents three scalability solutions and specifically familiarizes the reader with sharding, a scaling solution with the aim of improving transaction throughput and reducing per-node resource requirements. 
+
+\section{Solutions}
+
+Building a scalable blockchain has been under scrutiny for quite a while and compelling efforts have been put into research and development. The fundamental problem that prevents blockchain to scale is the underlying protocol. The consensus architectures strongly rely on every node processing every transaction because the security of the network relies on the percentage of honest users. Fortunately, a number of ways to solve the non-scalability of blockchains arose in the past and have produced several proposals from both academia and industry.
+
+This section covers the most promising solutions, namely state channels, Plasma and sharding. It is important to point out that all of them are complementary in the sense that each solution has their advantages and disadvantages over the others and maximum scalability could be achieved when all three solutions are in use in parallel. Furthermore, another key point of solving scalability of blockchains is the introduction of PoS \parencite{Spasovski:2017:PSB:3167020.3167058}, because it is much easier and faster to reach consensus by checking the stake of a node than it is to check the hashing power. However, PoS will not be discussed further in this paper.
+
+\subsection{State Channels}
+
+A state channel is a two-way communication channel which allows participants to send transactions off-chain, that is, participants do not rely on the state-altering operation of the blockchain, but instead can rapidly perform an unlimited number of updates without the need to involve the blockchain at all. 
+
+State channel solutions are currently being developed and tested for both Bitcoin and Ethereum with the Lightning Network \cite{LightningNetwork} and the Raiden Network \cite{RaidenNetwork} respectively. Without loss of generality, the following example explains state channels based on the Raiden Network specification.
+
+The Raiden Network is an off-chain transfer network for ERC20 tokens. While Ethereum smart contracts enable secure on-chain settlement, Raiden enables off-chain payment transfers. It is simply described as follows: Assume Alice and Bob want to transfer assets with each other. To open up a channel, Alice simply deploys a smart contract on the Ethereum blockchain. Then, both parties make a security deposit to the channel, i.e., they both deposit 5 Ether and the smart contract holds these assets on their behalf. Once the channel is open, they can digitally sign as many transactions between them as they like off-chain (up to 10 Ether) without ever broadcasting the changes to the network. In order to use the transferred assets on-chain, the channel needs to be closed either by Alice or Bob. The only information that is written to the blockchain is the net outcome of all transfers. The information about individual transactions stays private.
+\par \
+
+\noindent
+Raiden addresses a number of blockchain related issues:
+
+\begin{description}
+  \item[Scalability] Ethereum is currently limited to around 10 transactions per second. Raiden will scale with the number of its users, i.e., as the network expands, the maximum throughput will increase linearly.
+  \item[Latency] Ethereum mines a new block approximately every 15 to 30 seconds and finality of a transaction takes a few minutes. With Raiden, transactions immediately show up the moment they are sent. There is no need to wait for any confirmations.
+  \item[Transaction Fees] Opposed to paying fees for global consensus on the Ethereum blockchain, state channel participants only have to pay for forwarding peer-to-peer consensus which results in tiny transaction fees. In fact, transfers made via payment channels, unlike on-chain transfers, inherently do not require any fees.
+  \item[Privacy] When a state channel between two participants is settled, only the sum of transactions appears on the blockchain. Intermediate payment transfers do not appear on the blockchain.
+\end{description}
+
+\noindent
+If implemented correctly, Raiden can solve substantial issues of the Ethereum blockchain and ultimately brings low-fee, highly scalable, near-instant and privacy-preserving payments to the masses.
+
+\subsection{Plasma}
+
+Plasma \parencite{Plasma} is a framework proposed by Lightning Network creator Joseph Poon and Ethereum creator Vitalik Buterin. Plasma is a layer two scalability solution which doesn't improve the blockchain itself. Instead, it takes an existing blockchain, creates a special construction which is connected to it, and thus provides a much higher throughput.
+
+In essence, Plasma connects parent and child chains to the main blockchain and transforms it into a tree-structure. By using MapReduce functions and a combination of PoS token bonding, fraud proofs and chain exit strategies, Plasma can increase transaction throughput exponentially without sacrificing security that usually comes with smaller chains.
+
+In Plasma, a series of contracts run on top of a blockchain, e.g. Ethereum. The blockchain acts as the root chain and allows additional chains to register themselves by a smart contract. Each parent chain, or "Plasma chain", has its own independent data and only periodically reports back to the main chain. One can view the main chain as the Supreme Court from which all subordinate courts derive their power \parencites{Plasma10Min}. In order to detect and penalize fraud, parties of a parent chain are responsible for monitoring the particular chain they are interested in. In the event of an attack, participants can rapidly and cheaply do a mass-exit from the child chain to a root chain.
+
+\begin{figure}[hbt]
+\centering
+\captionsetup{justification=centering}
+  \begin{tikzpicture}
+  \tikzset{node root/.style={state,minimum width=10mm,minimum height=10mm,rectangle}}
+  \tikzset{node parent/.style={state,minimum width=6mm,minimum height=6mm,rectangle}}
+  \tikzset{node child/.style={state,minimum width=3mm,minimum height=3mm,rectangle}}
+  
+  \node[node root]                (r1)  {};
+  \node[node root, right=of r1]   (r2)  {};
+  \node[node root, right=of r2]   (r3)  {};
+  \node[node root, right=of r3]   (r4)  {};
+  \node[node root, right=of r4]   (r5)  {};
+  \node[node parent, above=7mm of r3] (p0)  {};
+  \node[node parent, above=7mm of p0] (p1)  {};
+  \node[node child, above=5mm of p1]  (c11)  {};
+  \node[node child, above=5mm of c11] (c12)  {};
+  \node[node child, above=5mm of c12] (c13)  {};
+  \node[node child, left=of c11]  (c21)  {};
+  \node[node child, left=of c12]  (c22)  {};
+  \node[node child, left=of c13]  (c23)  {};
+  \node[node child, right=of c11] (c31)  {};
+  \node[node child, right=of c12] (c32)  {};
+  \node[node child, right=of c13] (c33)  {};
+  
+  \node[draw=none, below=3mm of r3]   (rtext)  {Root Chain (Main Ethereum Chain)};
+  \node[draw=none, right=3mm of p0]   (ptext)  {Parent Chain};
+  \node[draw=none, right=3mm of c32]  (ctext)  {Child Chain};
+  
+  \draw[>=latex,
+        auto=left,
+        every loop]
+       (r2)     edge node {}   (r1)
+       (r3)     edge node {}   (r2)
+       (r4)     edge node {}   (r3)
+       (r5)     edge node {}   (r4)
+       (p0)     edge node {}   (r3)
+       (p1)     edge node {}   (p0)
+       (c11)    edge node {}   (p1)
+       (c12)    edge node {}   (c11)
+       (c13)    edge node {}   (c12)
+       (c21)    edge node {}   (p1)
+       (c22)    edge node {}   (c21)
+       (c23)    edge node {}   (c22)
+       (c31)    edge node {}   (p1)
+       (c32)    edge node {}   (c31)
+       (c33)    edge node {}   (c32);
+       
+  \end{tikzpicture}
+  \caption{Plasma transforms the blockchain into a tree-structure using MapReduce functions that are run on Plasma chain trees.\label{fig:Plasma}}
+\end{figure}
+
+Figure \ref{fig:Plasma} shows that Plasma opts for a tree structure where the main blockchain is the root and the parent and child chains are the branches allowing for exponential increase in scalability.
+
+\subsection{Sharding}
+
+Sharding is a pattern \parencite{ShardingPatternMS} in distributed software systems and commonly utilized in distributed databases such as MongoDB \parencite{MongoDBSharding}, Elasticsearch \parencite{ElasticsearchSharding}, and Google's Spanner \parencite{Spanner2013}. In these database systems, a shard is a horizontal partition, where each shard is stored on a separate database server instance holding its own distinct subset of data. Each shard typically contains items that fall within a specified range determined by one or more attributes of the data. 
+
+For example, a possible strategy is hashed sharding, where a hashed index of a single field serves as the \textit{shard key} to partition data across clusters, as shown in Figure \ref{fig:HashedSharding}. The chosen hashing function distributes data evenly across the shards and reduces the load each shard has to deal with, albeit the additional overhead of computing the hash. 
+
+However, these sharding protocols do not take into account a Byzantine setting, where nodes must be resilient against malicious attackers, and in addition, independent nodes have to reach consensus over the current state of the network. In fact, sharding in a permission-less, decentralized network with the presence of Byzantine adversary is a well-known problem \parencite{Luu2016} with many challenges.
+
+\begin{figure}[hbt]
+  \newcommand{\block}[3]{node (p#1) [block] {#2\\{\scriptsize #3}}}
+  \centering
+  \captionsetup{justification=centering}
+  \begin{tikzpicture}[scale=0.8,transform shape]
+    \tikzstyle{block} = [draw,text width=9.5em,minimum width=10em,minimum height=3em]
+    \tikzstyle{line} = [draw, color=black, -latex']
+    \tikzstyle{ur}=[text centered, minimum height=2.5em]
+    \path \block {1}{Query Router}{with Hash Function};
+    \path (p1.north)+(0.0,1.0) node (r) [ur] {(1) "Rapperswil"};
+    \path (p1.south)+(-6.3,-1.75) \block {2}{Shard 1}{Hash Range \texttt{0000..3fff}};
+    \path (p1.south)+(-2.1,-1.75) \block {3}{Shard 2}{Hash Range \texttt{4000..7fff}};
+    \path (p1.south)+(2.1,-1.75) \block {4}{Shard 3}{Hash Range \texttt{8000..bffff}};
+    \path (p1.south)+(6.3,-1.75) \block {5}{Shard 4}{Hash Range \texttt{c000..ffff}};
+    \path (p5.north)+(0.0,1.1) node (rhashed) [ur] {(2) "Rapperswil" = \texttt{0xfc49..}};
+
+    \path [line] (r.south) -- +(0.0,-0.5) -- node [above, midway] {} (p1);
+    
+    \path [line] (p1.south) -- +(0.0,-0.5) -- +(-6.3,-0.5) -- node [above, midway] {} (p2);
+    \path [line] (p1.south) -- +(0.0,-0.5) -- +(-2.1,-0.5) -- node [above, midway] {} (p3);
+    \path [line] (p1.south) -- +(0.0,-0.5) -- +(+2.1,-0.5) -- node [above, midway] {} (p4);
+    \path [line] (p1.south) -- +(0.0,-0.5) -- +(+6.3,-0.5) -- node [above, midway] {} (p5);
+  \end{tikzpicture}
+  \caption{Hashed sharding is common in traditional databases where values are partitioned into shards by its shard key.\label{fig:HashedSharding}}
+\end{figure}
+
+Sharding is a layer one scalability solution which is designed to directly improve the existing blockchain. In order to scale a blockchain with sharding, the state must be divided into partitions (shards), where each shard is stored on different nodes in the network. Nodes work on individual shards side-by-side, processing only a small part of the network state while still maintaining cross-shard consensus to prevent double-spending and other attack vectors. The point of sharding in a blockchain setting is to create parallelization, i.e., instead of 10'000 nodes processing, validating, and storing all transactions that happen on the network, 100 nodes process 100 transactions.
+
+\section{Challenges}
+
+\label{Chapter:Background:Challenges}
+
+Ultimately, our goal is to avoid requiring nodes to store the state of the entire system. We want the blockchain to scale linearly with every new node added to the network, also called \textit{horizontal scaling} in traditional environments. We achieve this by dividing the network state into partitions, called \textit{shards}, where every individual shard is responsible only for a subset of users and each shard having it's own blockchain. We want to achieve higher scalability without sacrificing security or decentralization. The protection of each individual shard must be ensured \textit{implicitly} by the strength of a large fraction of the network, but without each shard having to watch other shards \textit{explicitly}.
+
+% TODO: Mention challenges https://github.com/ethereum/wiki/wiki/Sharding-FAQ#what-are-the-challenges-here
+% TODO: Challenge 1: Cross shard communication
+% TODO: Challenge 2: Single-shard takeover attacks (solved by random sampling https://github.com/ethereum/wiki/wiki/Sharding-FAQ#how-can-we-solve-the-single-shard-takeover-attack-in-an-uncoordinated-majority-model)
+% TODO: Challenge 3: Fraud detection
+% TODO: Challenge 4: The data availability problem

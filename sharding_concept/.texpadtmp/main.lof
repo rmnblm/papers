@@ -1,0 +1,22 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
+\select@language {english}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Plasma transforms the blockchain into a tree-structure using MapReduce functions that are run on Plasma chain trees.\relax }}{5}{figure.caption.13}
+\contentsline {figure}{\numberline {2.2}{\ignorespaces Hashed sharding is common in traditional databases where values are partitioned into shards by its shard key.\relax }}{6}{figure.caption.15}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces An overview of entities in the Bazo blockchain.\relax }}{7}{figure.caption.20}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces The concept of epochs with number of shards $NofShards = 3$ and epoch length $length_{ep} = 3$.\relax }}{9}{figure.caption.23}
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Load-balancing dynamically adjusts the number of shards to maximize throughput and minimize overload of a single node.\relax }}{10}{figure.caption.34}
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Initial situation of an SCP example: A user has to include two Merkle proofs for $F3$ and $F6$ in the next transaction.\relax }}{13}{figure.caption.48}
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Transactions in Merkle trees are in ascending order\relax }}{15}{figure.caption.62}
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Transaction aggregation types\relax }}{16}{figure.caption.64}
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Shardchains could diverge during due to network latency or other reasons resulting in different block heights.\relax }}{17}{figure.caption.71}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Generating the hash of an aggregated transaction\relax }}{20}{figure.caption.86}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Transaction aggregation results in a double-linked blockchain.\relax }}{21}{figure.caption.88}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Extending the Merkle tree with aggregated transactions.\relax }}{26}{figure.caption.97}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Diverging shardchains are prone to double spending attacks by adversarial users.\relax }}{27}{figure.caption.100}
+\addvspace {10\p@ }

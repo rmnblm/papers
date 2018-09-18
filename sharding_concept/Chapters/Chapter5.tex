@@ -1,0 +1,198 @@
+% Chapter Evaluation
+
+\chapter{Evaluation}
+\label{Chapter:Evaluation}
+
+In the introduction of this paper, we stated that blockchains are subject to an impossible trinity between decentralization, scalability and security. As a result, only two out of these three properties can be achieved to a highest degree and our design of a scalable blockchain may be no exception. Sharding in permission-less, decentralized network with the presence of Byzantine adversary not only results in very new attack scenarios, but also reinstates problems that seem to be solved in non-sharded blockchains.
+
+\section{Security Considerations}
+\label{Eval:SecurityConsiderations}
+
+In general, blockchain always raises a variety of pressing security considerations which directly influence the design of it. Each change request could potentially break the entire system and puts the blockchain and its users at risk. Reducing the opportunities for attackers to exploit a potential weak spot or vulnerability requires to minimise the attack surface and applying a structured approach to threat scenarios during design. 
+
+With the introduction of self-contained proofs, a validator who becomes a leader for another shard does not need to have knowledge of its users or shardchain history. Self-contained proofs undoubtedly prove to a validator that a user is eligible to perform a transaction, i.e., user $A$ has sufficient funds to send amount $x$ to $B$. Hence, a validator must be absolutely capable of deciding whether a transaction is valid or not, having only the last state of the epoch and the transaction itself. A self-contained proof must include a Merkle proof for each transaction transmitted since the last epoch, that is,
+\begin{gather}
+  \label{eq:NofMerkleProofs}
+  length([Merkle\ proofs]) = (nonce_{current} - nonce_{epoch}),
+\end{gather}
+where $[Merkle\ proofs]$ is a list of Merkle proofs, where $nonce_{current}$ denotes the current transaction counter of the account, and where $nonce_{epoch}$ denotes the transaction counter of the account at the beginning of the epoch. Self-contained proofs are unquestionably a hotspot for exploitation, and every possible attack scenario must be taken into consideration.
+
+To verify the validity of a SCP, a leader starts by performing block-wise Bloom filter checks. In short, the leader starts at block height $h - 1$ and queries the Bloom filter with the user's wallet address $pk_{wall}$. If the Bloom filter returns \textit{false}, the leader continues with block at height $h - 2$ and so on until the Bloom filter returns \textit{true}. If the Bloom filter returns \textit{true}, the leader generates the Merkle root $M_1$ with the first Merkle proof contained in the SCP and compares it with the Merkle root $M_2$ contained in the block. If $M_1$ does not equal $M_2$, the SCP is invalid because the first Merkle proof does not correspond to the most recent transaction of the user. If $M_1$ equals $M_2$, the leader continues repeats the process for the next Merkle proof until all Merkle proofs have been validated.
+
+The validation process of a SCP works well when there is only one transaction per user and per block. However, an adversarial user can create a fraudulent proof if there are more transactions per user in a block. Essentially, each block contains a Bloom filter which returns \textit{true} when the block contains a particular transaction. If a block contains more than one transaction of the same user, the Bloom filter returns \textit{true} but does not return the number of transactions that are included in the block, which then can be exploited with a fraudulet, yet valid Merkle proof. Example \ref{ex:ExtMerkleTree} demonstrates how this potential vulnerability can be exploited and how it is solved.
+
+\begin{example}
+\label{ex:ExtMerkleTree}
+Consider a Merkle tree as shown in Figure \ref{fig:ExtMerkleTreeWoTx}. Assume that transactions $F1$ and $F4$ belong to the same user. Querying the Bloom filter for this block returns \textit{true}, however, it does not return the number of transactions that are contained within the Merkle tree. The adversarial user can create a valid Merkle proof by providing the values $\{F1, F2, H2\}$ without mentioning $F4$. 
+
+Transactions aggregation introduced in Section \ref{Design:TransactionAggregation} mitigates this weakness. A leader aggregates transactions by sender when including them in a block. Querying the Bloom filter for this block returns \textit{true}, because the block contains an aggregated transaction. Figure \ref{fig:ExtMerkleTreeWTx} shows the same block as before, but this time, $F1$ and $F4$ are aggregated into $A1$. A user has to provide the values $\{H1, F5, A1\} = \{H1, F5, F1, F4\}$ to generate a valid Merkle proof, since it is computationally infeasible to guess the transaction hash of $A1$ without knowing the hashes of $F1$ and $F4$.
+\begin{figure}[hbt]
+\centering
+\begin{subfigure}[b]{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.6,node distance=20mm, 
+  every node/.style={transform shape},
+  hid/.style={edge from parent/.style={draw=none}},
+  level/.style={sibling distance=40mm/#1}
+]
+
+\tikzstyle{vertex}=[draw,circle,minimum size=36pt,inner sep=0pt]
+\tikzstyle{vertexsmall}=[draw,circle,minimum size=24pt,inner sep=0pt]
+\tikzstyle{hidden}=[draw=none,circle,minimum size=24pt,inner sep=0pt]
+\tikzset{node style/.style={state,minimum width=12mm,minimum height=12mm,rectangle}}
+
+\node[node style]              (b1){};
+\node[node style, right=of b1] (b2){};
+\node[node style, right=of b2] (b3){};
+
+\node [vertex,below=1cm of b2] (r1){$M$}
+  child {
+    node [vertex] {$H1$}
+    child {
+      node [vertex,very thick] {$F1$}
+    }
+    child {
+      node [vertex] {$F2$}
+    }
+  }
+  child {
+    node [vertex] {$H2$}
+    child {
+      node [vertex] {$F3$}
+    }
+    child {
+      node [vertex,very thick] {$F4$}
+      child[hid] {
+        node [hidden] {}
+      }
+      child[hid] {
+        node [hidden] {}
+      }
+    }
+  };
+
+\draw[>=latex,auto=left,every loop]
+  (b2) edge node {} (b1)
+  (b3) edge node {} (b2); 
+ 
+\draw[thin,shorten >=4pt,shorten <=4pt,>=stealth,dotted]
+  (r1) edge node {}   (b2);
+   
+\end{tikzpicture}  
+\caption{Without transaction aggregation\label{fig:ExtMerkleTreeWoTx}}
+\end{subfigure}
+~
+\begin{subfigure}[b]{0.48\textwidth}
+\centering
+\begin{tikzpicture}[scale=0.6,node distance=20mm, 
+  every node/.style={transform shape},
+  level/.style={sibling distance=40mm/#1}
+]
+
+\tikzstyle{vertex}=[draw,circle,minimum size=36pt,inner sep=0pt]
+\tikzstyle{vertexsmall}=[draw,circle,minimum size=24pt,inner sep=0pt]
+\tikzset{node style/.style={state,minimum width=12mm,minimum height=12mm,rectangle}}
+
+\node[node style]              (b1){};
+\node[node style, right=of b1] (b2){};
+\node[node style, right=of b2] (b3){};
+
+\node [vertex,below=1cm of b2] (r1){$M$}
+  child {
+    node [vertex] {$H1$}
+    child {
+      node [vertex] {$F2$}
+    }
+    child {
+      node [vertex] {$F3$}
+    }
+  }
+  child {
+    node [vertex] {$H2$}
+    child {
+      node [vertex] {$F5$}
+    }
+    child {
+      node [vertex] {$A1$}
+      child {
+        node [vertexsmall,very thick] {$F1$}
+      }
+      child {
+        node [vertexsmall,very thick] {$F4$}
+      }
+    }
+  };
+
+\draw[>=latex,auto=left,every loop]
+  (b2) edge node {} (b1)
+  (b3) edge node {} (b2); 
+ 
+\draw[thin,shorten >=4pt,shorten <=4pt,>=stealth,dotted]
+  (r1) edge node {}   (b2);
+   
+\end{tikzpicture}  
+\caption{With transaction aggregation\label{fig:ExtMerkleTreeWTx}}
+\end{subfigure}
+\caption{Extending the Merkle tree with aggregated transactions.}
+\end{figure}
+\end{example}
+
+\section{Attack Scenarios}
+\label{Eval:AttackScenarios}
+
+In non-sharded blockchains, double spending is solved with the nonce. A nonce is just a sequential number tied to every transaction that represents the number of transactions the sender account has made on the network. If a transaction with a nonce that has already been transacted is submitted, it will be rejected by the network.
+
+In the design of our sharded blockchain, validators neither store blocks of shards other than their assigned shard nor share user information such as funds and transaction counter with each other. For example, if user $A$ of shard $1$ sends amount $x$ to user $B$ of shard $2$, validators of shard $2$ have no knowledge if user $A$'s balance is greater or equal than $x$ or not.
+
+Assuming that the block height between shards is not synchronised, an adversary could take advantage and leave out Merkle proofs of transactions.
+
+\begin{example}
+\label{ex:DoubleSpending}
+Consider a system as shown in Figure \ref{fig:Eval:Attacks} with $NofShards = 3$, block height of shard 1 is $h_1 = 5$, block height of shard 2 is $h_2 = 3$, and block height of shard 3 is $h_3 = 4$. Furthermore, assume that an adversarial user $A$ of shard 1 with balance $100$ has transferred $5$ in transaction $Tx1$ and $95$ in transaction $Tx2$ resulting in $balance = 0$ for user $A$. Next, $A$ could attempt to send $95$ to a user $B$ in shard 2 by creating a transaction without including a Merkle proof for $Tx2$. Since validators of shard 2 have no knowledge about blocks in shard 1, they have no way of proving the validity of the transaction from $A$ to $B$.
+
+\begin{figure}[hbt]
+  \centering
+  \begin{tikzpicture}
+    \tikzset{node style/.style={state,node distance=7mm,minimum width=3mm,minimum height=3mm,rectangle}}
+  
+    \node[node style]               (eb-1)   {};
+    \node[node style, right=of eb-1]   (sb_2-1)  {};
+    \node[node style, above=of sb_2-1]  (sb_1-1)  {};
+    \node[node style, below=of sb_2-1]  (sb_3-1)  {};
+    \node[node style, right=of sb_2-1]  (sb_2-2) {};
+    \node[node style, above=of sb_2-2]  (sb_1-2) {};
+    \node[node style, below=of sb_2-2]  (sb_3-2) {};
+    \node[node style, right=of sb_3-2]  (sb_3-3) {};
+    \node[node style, right=of sb_3-3]  (sb_3-4) {};
+    \node[node style, right=of sb_2-2] (sb_2-3)  {};
+    \node[node style, right=of sb_1-2] (sb_1-3)  {};
+    \node[node style, right=of sb_1-3] (sb_1-4)  {};
+    \node[draw=none, above=of sb_1-1] (sb_0-1)  {$Tx1$};
+    \node[node style, right=of sb_1-4] (sb_1-5)  {};
+    \node[draw=none, above=of sb_1-5] (sb_0-5)  {$Tx2$};
+  
+  \draw[>=latex,
+      auto=left,
+      every loop]
+     (sb_1-1)   edge node {}   (eb-1)
+     (sb_2-1)   edge node {}   (eb-1)
+     (sb_3-1)   edge node {}   (eb-1)
+     (sb_1-2)  edge node {}   (sb_1-1)
+     (sb_2-2)  edge node {}   (sb_2-1)
+     (sb_3-2)  edge node {}   (sb_3-1)
+     (sb_1-3)  edge node {}   (sb_1-2)
+     (sb_1-4)  edge node {}   (sb_1-3)
+     (sb_1-5)  edge node {}   (sb_1-4)
+     (sb_2-3) edge node {}   (sb_2-2)
+     (sb_3-3) edge node {}   (sb_3-2)
+     (sb_3-4) edge node {}   (sb_3-3); 
+  \draw[thin,shorten >=4pt,shorten <=4pt,>=stealth,dotted]
+     (sb_0-5) edge node {}   (sb_1-5)
+     (sb_0-1) edge node {}   (sb_1-1);
+  
+  \end{tikzpicture}
+  \caption{Diverging shardchains are prone to double spending attacks by adversarial users.\label{fig:Eval:Attacks}}
+\end{figure}
+\end{example}
+
+Example \ref{ex:DoubleSpending} shows the necessity of block height synchronisation introduced in Section \ref{Design:BlockHeightSync}. In order for validators to detect malicious attempts by users, a validator relies on the block height being synchronised amongst shardchains. Then, a validator can perform Bloom filter checks to find out if proofs for transactions are missing in a self-contained proof.

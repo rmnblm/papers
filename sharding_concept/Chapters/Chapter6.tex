@@ -1,0 +1,10 @@
+% Chapter Summary and Conclusion
+
+\chapter{Summary, Conclusion, and Future Work}
+\label{Chapter:Summary}
+
+In this paper we have presented a sharding concept for the Bazo blockchain that allows the network to process transactions in parallel and significantly increase the transaction throughput. While the purpose of this thesis was only of conceptual matter, our research shows a viable approach towards blockchain scalability and will be of fundamental importance for the next step: the \textit{actual} implementation.
+
+Given the non-exhaustive list of security considerations and attack scenarios in Chapter \ref{Chapter:Evaluation}, future work includes more research in exploitable weak points, careful implementation and strict reviews before running a \textit{sharded} version of Bazo in production. For example, a validator could fulfill the leader election equation \ref{eq:PoSCondition} for an invalid block height with a lower $Target$ value than the proposed shard block, resulting in a fork. Then, the validator gradually reduces the difficulty while proposing valid blocks using PoW in order to overtake the non-adversarial shardchain.
+
+Future work further includes studies about the sizes of blocks and shards doing theoretical calculations or running experiments to optimally scale out the blockchain. Preemptive installments for data loss in the event of a complete shard going offline must be thought out. More research must be done about the number of stored blocks after all transactions have been aggregated and what implications smart contracts have in a future implementation.

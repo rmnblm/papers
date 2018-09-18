@@ -1,0 +1,35 @@
+% Chapter 1: Introduction
+
+\chapter{Introduction}
+
+\label{Chapter:Introduction}
+
+Blockchain brings a paradigm shift to many businesses and the possible areas of application are still unfathomable at present time. Financial institutions, governments, healthcare businesses, supply chain firms, among others, are starting to realize that blockchain is not an exuberant idea dreamt by cyber-libertarians praying for utopian ideals. It has become increasingly evident that decentralized networks, distributed ledgers, and token economics could propel industries into a new era of enterprise.
+
+Nevertheless, while cryptocurrencies progressively enjoy mainstream adoption and the interest in blockchain technology grows on a daily basis, major challenges  remain. There is still one missing piece that prevents these applications come to fruition on a global extent: \textit{scalability}.
+
+\section{Motivation}
+
+The impossible trinity between decentralization, scalability and security \parencite{BlockchainTrilemma} that blockchains suffer to can be explained with Bitcoin as an example. The prominent cryptocurrency with the highest market capitalization, around \$110 billions at the time of writing \parencite{BitcoinMarketCap}, roughly processes 4 transactions per second (tps) on average. In contrast, Visa has a peak capacity of 65'000 tps \parencite{VisaFactSheet}. 
+
+Bitcoin's challenging limitation lies in the fact that each full node is required to store the complete blockchain, which is a continuously-growing list of transactions, and by now takes up around 160 GB of hard drive space. The number of transactions per second is constrained by the maximum block size and the block confirmation time. Additionally, each full node has to perform all computations and validate every single transaction performed on the network. As a result, the number of transactions the blockchain is able to process can never exceed that of a single node.
+
+A viable, but in some cases naive approach to increase the transactional throughput would be to simply increase the block size limit, as stated in several proposals \parencites{BIP100, BIP101}. However, the past has shown that increasing the block size limit is a highly controversial topic \parencite{BlockSizeLimitControversy} and it has been a dividing factor of the Bitcoin community, notably the hard fork of Bitcoin and Bitcoin Cash \parencite{BitcoinForkBCH}. In the case of Bitcoin and Bitcoin Cash, the transaction throughput indeed increased after the fork due to the higher block size limit, but since the community split in two, the computational resources, hence the overall security of each blockchain proportionally dispersed.
+
+In traditional environments, scalability is solved by adding more servers to process more transactions, or to generally handle an increasing demand of incoming network traffic. In contrast, scalability in a decentralized environment \textit{can be solved} by adding more computing power to every node for the network to get faster. This solution could postpone the effects of network limitation, but it's likely to only be a temporary solution if Moore's Law \parencite{Moore:2000:CMC:333067.333074} is in effect for these resources.
+
+In general, raising the block size limit makes running a full node more difficult, since the required resources to participate in the network increases. The more computationally expensive it is to validate the blockchain, the fewer network participants who will do it. This leads to a risk of much higher centralization due to the tragedy of the commons \parencite{Garret68}.
+
+After all, the increasing popularity of cryptocurrencies and smart contract platforms shows that the necessity for a future-proof scalability solution is an inevitable challenge for Bitcoin, Ethereum and every other blockchain-based consensus protocol. 
+
+\section{Description of Work}
+
+This thesis covers the design of a sharding mechanism for the Bazo cryptocurrency that allows the blockchain to scale and greatly increase the transaction throughput. Bazo \parencites{Sgier17, Bachmann18} is an open source cryptocurrency developed from scratch by students at the University of Zurich and University of Applied Sciences Rapperswil. Initially developed as a blockchain based on Proof of Work (PoW), energy consumption considerations and the risk of centralization were reasons to recently switch from PoW to Proof of Stake (PoS). 
+
+In PoS, validators vote with their ownership of a certain cryptocurrency unit instead of computational power. The weight of each validator in the network depends on the size of of their stake. PoS seeks to address the computational overhead of PoW by attributing mining power in proportion to the amount of coins held by a miner
+
+The importance of finding a solution to the scalability problem has raised awareness in the academia and industry \parencites{BitcoinNG16, Zilliqa18, OmniLedger18}. Blockchain scaling is an on-going research in this area and the viability of blockchain sharding must still be established. Thus, this conceptual work is highly explorative and prototype-driven.
+
+\section{Project Outline}
+
+The remainder of this document is structured as follows: Chapter \ref{Chapter:Background} elaborates on three different scaling solutions for blockchains and familiarizes the reader with sharding. Chapter \ref{Chapter:Design} introduces a new design approach for sharding blockchains. Chapter \ref{Chapter:Implementation} gives further implementation details and elaborates on practical details. Chapter \ref{Chapter:Evaluation} conducts an evaluation of the chosen sharding design. Conclusions are drawn in Chapter \ref{Chapter:Summary}.

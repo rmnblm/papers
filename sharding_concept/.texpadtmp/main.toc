@@ -1,0 +1,47 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\defcounter {refsection}{0}\relax 
+\select@language {english}
+\contentsline {chapter}{Declaration of Authorship}{iii}{section*.1}
+\contentsline {chapter}{Abstract}{vii}{section*.2}
+\contentsline {chapter}{Acknowledgements}{ix}{section*.3}
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.5}
+\contentsline {section}{\numberline {1.1}Motivation}{1}{section.6}
+\contentsline {section}{\numberline {1.2}Description of Work}{2}{section.7}
+\contentsline {section}{\numberline {1.3}Project Outline}{2}{section.8}
+\contentsline {chapter}{\numberline {2}Background and Related Work}{3}{chapter.9}
+\contentsline {section}{\numberline {2.1}Solutions}{3}{section.10}
+\contentsline {subsection}{\numberline {2.1.1}State Channels}{3}{subsection.11}
+\contentsline {subsection}{\numberline {2.1.2}Plasma}{4}{subsection.12}
+\contentsline {subsection}{\numberline {2.1.3}Sharding}{5}{subsection.14}
+\contentsline {section}{\numberline {2.2}Challenges}{6}{section.16}
+\contentsline {chapter}{\numberline {3}Design}{7}{chapter.17}
+\contentsline {section}{\numberline {3.1}System Setting and Assumptions}{7}{section.18}
+\contentsline {subsection}{\numberline {3.1.1}Entities}{7}{subsection.19}
+\contentsline {subsection}{\numberline {3.1.2}Network Sharding}{8}{subsection.21}
+\contentsline {subsection}{\numberline {3.1.3}Epochs}{8}{subsection.22}
+\contentsline {subsection}{\numberline {3.1.4}Number of Shards}{9}{subsection.24}
+\contentsline {section}{\numberline {3.2}Identity Setup and Leader Formation}{10}{section.35}
+\contentsline {subsection}{\numberline {3.2.1}Leader Election}{11}{subsection.36}
+\contentsline {subsection}{\numberline {3.2.2}Leader Assignment}{12}{subsection.41}
+\contentsline {subsection}{\numberline {3.2.3}New Validators Joining Bazo}{12}{subsection.44}
+\contentsline {section}{\numberline {3.3}Transaction Sharding and Processing}{12}{section.45}
+\contentsline {subsection}{\numberline {3.3.1}Self-Contained Proofs}{12}{subsection.46}
+\contentsline {subsection}{\numberline {3.3.2}Transaction Validation}{13}{subsection.51}
+\contentsline {subsection}{\numberline {3.3.3}Transaction Aggregation}{15}{subsection.63}
+\contentsline {subsection}{\numberline {3.3.4}Block Height Synchronisation}{17}{subsection.70}
+\contentsline {section}{\numberline {3.4}Epoch Finality}{18}{section.79}
+\contentsline {chapter}{\numberline {4}Implementation}{19}{chapter.80}
+\contentsline {section}{\numberline {4.1}Transactions}{19}{section.81}
+\contentsline {subsection}{\numberline {4.1.1}Stake Transaction (StakeTx)}{19}{subsection.82}
+\contentsline {subsection}{\numberline {4.1.2}System Parameters (ConfigTx)}{19}{subsection.83}
+\contentsline {subsection}{\numberline {4.1.3}Funds Transaction (FundsTx)}{20}{subsection.84}
+\contentsline {subsection}{\numberline {4.1.4}Aggregation Transaction (AggTx)}{20}{subsection.85}
+\contentsline {section}{\numberline {4.2}Blocks}{21}{section.87}
+\contentsline {subsection}{\numberline {4.2.1}Shard Block}{21}{subsection.89}
+\contentsline {subsection}{\numberline {4.2.2}Epoch Block}{23}{subsection.90}
+\contentsline {subsection}{\numberline {4.2.3}Aggregation Block}{23}{subsection.91}
+\contentsline {chapter}{\numberline {5}Evaluation}{25}{chapter.92}
+\contentsline {section}{\numberline {5.1}Security Considerations}{25}{section.93}
+\contentsline {section}{\numberline {5.2}Attack Scenarios}{26}{section.98}
+\contentsline {chapter}{\numberline {6}Summary, Conclusion, and Future Work}{29}{chapter.101}
+\contentsline {chapter}{Bibliography}{33}{appendix*.103}
