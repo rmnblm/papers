@@ -5,5 +5,5 @@ In this work, we present a sharding concept for the Bazo blockchain designed to 
 
 We further propose a mechanism to reduce the overall size of the blockchain over time. The mechanism follows a transaction aggregation style using coalesced transactions and collectively signed state blocks. Within the realm of this new concept, we provide examples of in-shard and cross-shard transactions and briefly discuss mitigated attack scenarios to preserve the consistency and integrity of the Bazo blockchain.
 
-Download: [PDF](./main.pdf) [TeX](./main.tex)
+Download: [PDF](./main.pdf) [TeX](./main.tex) [Slides](./slides.pdf)
 

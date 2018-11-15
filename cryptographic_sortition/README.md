@@ -5,5 +5,5 @@ The goal of this paper is to analyze existing blockchain protocols based on Proo
 
 Bazo is a peer-to-peer cryptocurrency which recently moved from Proof of Work (PoW) to chain-based PoS. However, the PoS protocol of Bazo has a vulnerability that is exploitable in the event of a fork where validators unintentionally reveal secret information.
 
-Download: [PDF](./cryptographic_sortition.pdf) [TeX](./cryptographic_sortition.tex)
+Download: [PDF](./cryptographic_sortition.pdf) [TeX](./cryptographic_sortition.tex) [Slides](./slides.pdf)
 
