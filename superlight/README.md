@@ -1,0 +1,9 @@
+# Superlight - A Permissionless, Light-client Only Blockchain with Self-Contained Proofs and BLS Signatures
+
+Blockchain protocols are based on a distributed, public database where stored data is guaranteed to be immutable. The requirement that all nodes have to maintain their own identical, local copy of the database ensures security while consensus mechanisms help deciding which data gets added to the database and keep powerful adversaries from derailing the system. However, since the database that forms the foundation of a blockchain is a continuously growing list of blocks, scalability is an inherent problem of this technology. Some public blockchains need a few 100 GB to Terabytes of storage. 
+
+In this work, we present the concept Superlight with self-contained proofs, which is designed to improve scalability of blockchain protocols, while preserving security and decentralization. Instead of all nodes having a local copy of the whole blockchain to verify a transaction, nodes can derive the validity of a transaction by only using block headers of the chain. To keep the block headers compact, BLS signatures are used to combine signatures. We provide a formal definition of SCPs and show the required steps of a client to create a proof that is accepted by other nodes. The advantage of such a light-client-only blockchain protocol is the lower storage requirement, while the drawback is an increased computational complexity due to BLS signatures, limited use-cases due to lack of a global state, and the requirement for an interactive protocol between sender, receiver, and miner to create a transaction.
+
+Download: [PDF](./paper.pdf) [TeX](./paper.tex)
+
+The paper is also available on [arXiv.org](https://arxiv.org/abs/1901.02213).
